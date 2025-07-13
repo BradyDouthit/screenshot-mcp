@@ -77,10 +77,102 @@ echo '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | node dist/index.js
 
 The server provides a `screenshot` tool with the following parameters:
 
+### Basic Parameters
 - `url` (required): Localhost URL to capture (e.g., `http://localhost:3000`)
 - `width` (optional): Viewport width in pixels (default: 1280)
 - `height` (optional): Viewport height in pixels (default: 720)
 - `fullPage` (optional): Capture full page scroll (default: false)
+
+### Interactive Actions
+- `actions` (optional): Array of actions to perform before taking the screenshot
+
+#### Supported Actions
+
+**Click Action**
+```json
+{
+  "type": "click",
+  "selector": "#submit-button",
+  "timeout": 5000
+}
+```
+
+**Type Action**
+```json
+{
+  "type": "type",
+  "selector": "input[name='email']",
+  "value": "test@example.com",
+  "timeout": 5000
+}
+```
+
+**Wait Action**
+```json
+{
+  "type": "wait",
+  "timeout": 3000
+}
+```
+
+**Scroll Action**
+```json
+{
+  "type": "scroll",
+  "selector": ".scroll-container",
+  "timeout": 2000
+}
+```
+Or scroll by amount:
+```json
+{
+  "type": "scroll",
+  "value": "500",
+  "timeout": 2000
+}
+```
+
+**Hover Action**
+```json
+{
+  "type": "hover",
+  "selector": ".menu-item",
+  "timeout": 2000
+}
+```
+
+#### Selector Types
+- **CSS Selectors**: `#id`, `.class`, `[attribute]`, `tag`
+- **XPath**: `//div[@class='example']` (prefix with `//`)
+- **Text Selectors**: `text=Click Me` (exact text match)
+
+#### Example with Actions
+```json
+{
+  "url": "http://localhost:3000",
+  "width": 1920,
+  "height": 1080,
+  "actions": [
+    {
+      "type": "click",
+      "selector": "#menu-toggle"
+    },
+    {
+      "type": "wait",
+      "timeout": 500
+    },
+    {
+      "type": "type",
+      "selector": "input[name='search']",
+      "value": "test query"
+    },
+    {
+      "type": "click",
+      "selector": "text=Search"
+    }
+  ]
+}
+```
 
 ## Security
 
