@@ -1,6 +1,14 @@
 # Screenshot MCP Server
 
-A Model Context Protocol (MCP) server that provides screenshot capabilities for localhost development servers. This allows LLMs to see visual results of code changes during development.
+A Model Context Protocol (MCP) server that provides screenshot capabilities for localhost development servers. This allows LLMs to see visual results of code changes during development which is particularly helpful when making UI changes. 
+
+## Example (Claude Code)
+Here's a basic example of me using Claude Code where I needed to center a button (LLM's don't do well at grasping this from text only)!
+
+![2EBEB0E7-FF73-41BC-99FB-83C3BB0E846D](https://github.com/user-attachments/assets/e70b1be0-fc99-4a5b-96b5-31ea249cb076)
+
+As you can see from the text, the model makes the changes then screenshots the page after the change to verify that it had the intended effect. This can drastically reduce manual effort when coding with LLM's.
+
 
 ## Features
 
