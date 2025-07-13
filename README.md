@@ -1,6 +1,23 @@
 # Screenshot MCP Server
 
-A Model Context Protocol (MCP) server that provides screenshot capabilities for localhost development servers. This allows LLMs to see visual results of code changes during development which is particularly helpful when making UI changes. 
+**Give your AI coding assistant eyes to see your UI changes in real-time.**
+
+This MCP server bridges the gap between AI code generation and visual verification. Instead of describing what your UI looks like, your AI can actually see it by taking screenshots of your localhost development server.
+
+## The Problem
+
+When working with AI assistants on frontend code:
+- You describe layout issues, AI guesses solutions
+- AI makes changes, you manually check if they worked
+- Endless back-and-forth describing visual problems
+- AI can't understand spatial relationships from code alone
+
+## The Solution
+
+- **AI sees your UI directly** - Takes screenshots of localhost servers
+- **Visual verification** - AI confirms changes worked as intended
+- **Spatial awareness** - AI understands layout, alignment, and positioning
+- **Faster iterations** - Immediate visual feedback reduces debugging cycles 
 
 ## Example (Claude Code)
 Here's a basic example of me using Claude Code where I needed to center a button (LLM's don't do well at grasping spatial awareness from text only)!
@@ -38,25 +55,6 @@ claude mcp add /path/to/screenshot-mcp/dist/index.js
 
 *Note: The index.js file must be executable. If not, run `chmod +x /path/to/screenshot-mcp/dist/index.js`*
 
-### With Claude Desktop
-
-Add to your Claude Desktop MCP configuration:
-
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-**Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
-
-Replace `/path/to/screenshot-mcp` with the actual path to your cloned repository:
-
-```json
-{
-  "mcpServers": {
-    "screenshot": {
-      "command": "node",
-      "args": ["/path/to/screenshot-mcp/dist/index.js"]
-    }
-  }
-}
-```
 
 ### Manual Testing
 
