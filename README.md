@@ -6,7 +6,7 @@ A Model Context Protocol (MCP) server that provides screenshot capabilities for 
 
 - **Localhost-only**: Secure screenshot capture limited to localhost URLs
 - **Flexible viewport**: Configurable width, height, and full-page capture
-- **MCP integration**: Works with Claude Desktop and other MCP clients
+- **MCP integration**: Works with MCP clients like Claude Code and Claude Desktop
 - **Playwright-powered**: Reliable browser automation with Chromium
 
 ## Installation
@@ -19,6 +19,16 @@ npm run build
 ```
 
 ## Usage
+
+### With Claude Code
+
+Add the MCP server to Claude Code:
+
+```bash
+claude mcp add /path/to/screenshot-mcp/dist/index.js
+```
+
+*Note: The index.js file must be executable. If not, run `chmod +x /path/to/screenshot-mcp/dist/index.js`*
 
 ### With Claude Desktop
 
