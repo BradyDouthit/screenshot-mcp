@@ -45,6 +45,13 @@ npm run build
 
 ## Usage
 
+This MCP server is completely generic and works with any MCP-compatible client including:
+
+- **Claude Code** - Anthropic's official CLI tool
+- **Gemini CLI** - Google's command line interface
+- **Claude Desktop** - Anthropic's desktop application
+- **Any other MCP client** - The server follows standard MCP protocol
+
 ### With Claude Code
 
 Add the MCP server to Claude Code:
