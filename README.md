@@ -57,7 +57,7 @@ This MCP server is completely generic and works with any MCP-compatible client i
 Add the MCP server to Claude Code:
 
 ```bash
-claude mcp add /path/to/screenshot-mcp/dist/index.js
+claude mcp add screenshot-mcp -- /path/to/screenshot-mcp/dist/index.js
 ```
 
 *Note: The index.js file must be executable. If not, run `chmod +x /path/to/screenshot-mcp/dist/index.js`*
