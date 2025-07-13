@@ -4,15 +4,35 @@
   "description": "MCP server for taking screenshots of localhost development servers",
   "main": "dist/index.js",
   "type": "module",
+  "bin": {
+    "screenshot-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist/",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
     "start": "node dist/index.js",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build",
+    "postinstall": "npx playwright install chromium"
   },
-  "keywords": ["mcp", "screenshot", "playwright", "localhost"],
-  "author": "",
+  "keywords": ["mcp", "screenshot", "playwright", "localhost", "model-context-protocol"],
+  "author": "BradyDouthit",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BradyDouthit/screenshot-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BradyDouthit/screenshot-mcp/issues"
+  },
+  "homepage": "https://github.com/BradyDouthit/screenshot-mcp#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
     "playwright": "^1.40.0"
