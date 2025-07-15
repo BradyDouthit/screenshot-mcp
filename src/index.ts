@@ -76,7 +76,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                   },
                   selector: {
                     type: 'string',
-                    description: 'CSS selector, XPath (starts with //), or text selector (text=...)',
+                    description: 'CSS selector or text selector (text=...)',
                   },
                   value: {
                     type: 'string',
@@ -115,24 +115,28 @@ function validateUrl(url: string): void {
   }
 }
 
-function getLocator(page: Page, selector: string) {
-  if (selector.startsWith('//')) {
-    return page.locator(`xpath=${selector}`);
-  } else if (selector.startsWith('text=')) {
-    return page.locator(selector);
-  } else {
-    return page.locator(selector);
+async function getLocator(page: Page, selector: string) {
+  try {
+    const locator = page.locator(selector);
+    if (await locator.isVisible()) {
+      return locator;
+    }
+    throw new Error("The element is not visible. You may need to perform other actions to make it visible or try a different selector");
+  } catch {
+    throw new Error(`Element with selector "${selector}" not found. Stopping action sequence.`);
   }
 }
 
 async function executeClickAction(page: Page, selector: string): Promise<void> {
   if (!selector) throw new Error('Click action requires a selector');
-  await getLocator(page, selector).click();
+  const locator = await getLocator(page, selector);
+  await locator.click();
 }
 
 async function executeTypeAction(page: Page, selector: string, value: string): Promise<void> {
   if (!selector || !value) throw new Error('Type action requires selector and value');
-  await getLocator(page, selector).fill(value);
+  const locator = await getLocator(page, selector);
+  await locator.fill(value);
 }
 
 async function executeWaitAction(page: Page, timeout: number): Promise<void> {
@@ -141,7 +145,8 @@ async function executeWaitAction(page: Page, timeout: number): Promise<void> {
 
 async function executeScrollAction(page: Page, selector?: string, value?: string): Promise<void> {
   if (selector) {
-    await getLocator(page, selector).scrollIntoViewIfNeeded();
+    const locator = await getLocator(page, selector);
+    await locator.scrollIntoViewIfNeeded();
   } else if (value) {
     const scrollAmount = parseInt(value, 10);
     await page.evaluate((amount: number) => window.scrollBy(0, amount), scrollAmount);
@@ -150,7 +155,8 @@ async function executeScrollAction(page: Page, selector?: string, value?: string
 
 async function executeHoverAction(page: Page, selector: string): Promise<void> {
   if (!selector) throw new Error('Hover action requires a selector');
-  await getLocator(page, selector).hover();
+  const locator = await getLocator(page, selector);
+  await locator.hover();
 }
 
 async function executeAction(page: Page, action: ActionConfig): Promise<void> {
