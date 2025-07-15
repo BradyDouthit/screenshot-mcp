@@ -40,7 +40,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
     tools: [
       {
         name: 'screenshot',
-        description: 'Take a screenshot of a localhost URL with optional pre-screenshot interactions',
+        description: 'Take a screenshot of a localhost URL with optional pre-screenshot interactions. All interactions must be included in a single tool call.',
         inputSchema: {
           type: 'object',
           properties: {
@@ -65,7 +65,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             },
             actions: {
               type: 'array',
-              description: 'Optional sequence of actions to perform before taking screenshot',
+              description: 'Optional sequence of actions to perform before taking screenshot.',
               items: {
                 type: 'object',
                 properties: {
