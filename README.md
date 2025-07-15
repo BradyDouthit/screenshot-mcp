@@ -143,7 +143,6 @@ Or scroll by amount:
 
 #### Selector Types
 - **CSS Selectors**: `#id`, `.class`, `[attribute]`, `tag`
-- **XPath**: `//div[@class='example']` (prefix with `//`)
 - **Text Selectors**: `text=Click Me` (exact text match)
 
 #### Example with Actions
