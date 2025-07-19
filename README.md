@@ -65,14 +65,17 @@ claude mcp add screenshot-mcp -- /path/to/screenshot-mcp/dist/index.js
 Alternatively, you can add it to your `settings.json` file:
 
 ```json
-"mcpServers": {
-        "screenshot-mcp": {
-          "type": "stdio",
-          "command": "/path/to/screenshot-mcp/dist/index.js",
-          "args": [],
-          "env": {}
-        }
-      },
+{
+ // ..other parts of your settings
+  "mcpServers": {
+    "screenshot-mcp": {
+      "type": "stdio",
+        "command": "/path/to/screenshot-mcp/dist/index.js",
+        "args": [],
+        "env": {}
+    }
+  }
+}
 ```
 
 
