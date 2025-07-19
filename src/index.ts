@@ -8,6 +8,8 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import { chromium, Browser, Page } from 'playwright';
 
+let browser: Browser | null = null;
+
 interface ActionConfig {
   type: 'click' | 'type' | 'wait' | 'scroll' | 'hover';
   selector?: string;
@@ -99,9 +101,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   };
 });
 
-async function createBrowser(): Promise<Browser> {
-  return await chromium.launch();
-}
+
 
 async function createPage(browser: Browser, width: number, height: number): Promise<Page> {
   const page = await browser.newPage();
@@ -207,10 +207,12 @@ async function handleScreenshotRequest(config: ScreenshotConfig) {
 
   validateUrl(url);
 
-  const browser = await createBrowser();
+  if (!browser) {
+    throw new Error('Browser not initialized');
+  }
+
+  const page = await createPage(browser, width, height);
   try {
-    const page = await createPage(browser, width, height);
-    
     await page.goto(url, { waitUntil: 'networkidle' });
     
     if (actions.length > 0) {
@@ -234,8 +236,12 @@ async function handleScreenshotRequest(config: ScreenshotConfig) {
       ],
     };
   } finally {
-    await browser.close();
+    await page.close();
   }
+}
+
+async function createBrowser(): Promise<Browser> {
+  return await chromium.launch();
 }
 
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
@@ -254,9 +260,22 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 });
 
 async function main() {
+  browser = await createBrowser();
+
   const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.error('Screenshot MCP server running on stdio');
+  server.connect(transport).then(() => {
+    console.error('Screenshot MCP server running on stdio');
+  });
+
+  ['SIGINT', 'SIGTERM'].forEach((signal) => {
+    process.on(signal, async () => {
+      console.error(`Received ${signal}, closing browser...`);
+      if (browser) {
+        await browser.close();
+      }
+      process.exit(0);
+    });
+  });
 }
 
 main().catch((error) => {
