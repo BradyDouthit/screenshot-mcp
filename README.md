@@ -62,6 +62,19 @@ claude mcp add screenshot-mcp -- /path/to/screenshot-mcp/dist/index.js
 
 *Note: The index.js file must be executable. If not, run `chmod +x /path/to/screenshot-mcp/dist/index.js`*
 
+Alternatively, you can add it to your `settings.json` file:
+
+```json
+"mcpServers": {
+        "screenshot-mcp": {
+          "type": "stdio",
+          "command": "/path/to/screenshot-mcp/dist/index.js",
+          "args": [],
+          "env": {}
+        }
+      },
+```
+
 
 ### Manual Testing
 
